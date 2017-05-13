@@ -43,9 +43,9 @@ const container = document.querySelector('#container') // declare variable calle
 function render(element, data) {
   element.innerHTML = `
     <center>
-    <button id="button">What's the weather like today?</button>
+    <button id="button">GO!</button>
     <p>🌡</p>
-    <div class="weathermsg">It's going to be ${data.temp} with ${data.description}.</div>
+    <div class="weathermsg">It's going to be about ${data.temp}° with ${data.description}.</div>
     <p>${weatherEmojis(data.description)}</p>
   `
 }
@@ -65,8 +65,8 @@ function getWeather(lat, lng) {
 
 /* CONTROLLER */
 delegate('body', 'click', '#button', event => {
-  state.temp = '...'
-  state.description = '???'
+  state.temp = '~~~'
+  state.description = '~~~'
 
   render(container, state)
 
@@ -89,12 +89,32 @@ delegate('body', 'click', '#button', event => {
 
 /* Emoji string based on temperature */
 function weatherEmojis(str) {
-  if (str.indexOf('clear sky')) {
-    return '☀️☀️☀️'
-  } else if (str.indexOf('mist')) {
+  if (str.indexOf('clear sky') !== -1) {
+  return '☀️☀️☀️'
+  } else if (str.indexOf('few clouds') !== -1) {
+  return '🌤️'
+  } else if (str.indexOf('scattered clouds') !== -1) {
+    return '☁️  ~  ☁️'
+  } else if (str.indexOf('broken clouds') !== -1) {
+  return '☁️🌤☁️'
+  } else if (str.indexOf('overcast clouds') !== -1) {
+    return '☁️☁️☁️☁️☁️'
+  } else if (str.indexOf('light rain') !== -1) {
+    return '☔'
+  } else if (str.indexOf('light intensity drizzle') !== -1) {
+    return '🌧️☔🌧️☔'
+  } else if (str.indexOf('moderate rain') !== -1) {
+    return '🌧️🌧️☔'
+  } else if (str.indexOf('shower rain') !== -1) {
+    return '🌧️🌧️☔🌧️🌧️'
+  } else if (str.indexOf('heavy intensity rain') !== -1) {
+    return '☔🌧️🌧️🌧️🌧️🌧️☔'
+  } else if (str.indexOf('mist') !== -1) {
     return '🌫☁️🌫'
-  } else if (str.indexOf('broken clouds')) {
-    return '☁️🌤☁️'
+  } else if (str.indexOf('smoke') !== -1) {
+    return '💨💨💨'
+  } else if (str.indexOf('haze') !== -1) {
+    return '🌫️🌫️🌫️🌫️'
   }
 }
 

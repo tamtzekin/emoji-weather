@@ -1,6 +1,7 @@
 body {
   font-family: 'Quattrocento Sans', sans-serif;
   background-color: #E6F3F7;
+  color: #99cede;
   font-size: 30px;
 }
 
@@ -9,7 +10,7 @@ input[type="searchbar"]
     opacity: 0.45;
     width: 400px;
     height: 30px;
-    color: #B41E47;
+    color: #999999; /*#B41E47*/
     font-size: 15px;
     font-style: italic;
     text-align: center;
@@ -17,7 +18,7 @@ input[type="searchbar"]
 
 input[type="searchbar"]::-webkit-input-placeholder
 {
-    color: #B41E47;
+    color: #999999;
     -webkit-transition: opacity 0.3s linear;
 }
 
@@ -28,9 +29,13 @@ input[type="searchbar"]:focus::-webkit-input-placeholder
 
 button[id="button"]
 {
-  padding: 5px 40px;
+  padding: 5px 10px;
   font-size: 15px;
-  background-color: #D3EAF1;
+  background-color: white;
   opacity: 0.5;
-  color: #B41E47;
+  color: #999999;
+  float: right;
+  position: relative;
+  left: -372px;
+  top: -64px;
 }
