@@ -24,6 +24,7 @@
 const mapsApi = 'https://maps.googleapis.com/maps/api/geocode/json?address='
 const weatherUrl = "http://api.openweathermap.org/data/2.5/weather";
 const apiKey = "72af66db614bf9fd03583352142dd7a7";
+const input = document.querySelector("#searchbar");
 
 // Digs into the DOM and pulls out the actual location from a Google Maps search
 function getLatLng(location) { // build function called getLatLng, pass 'location' argument in
@@ -51,7 +52,7 @@ function render(element, data) { // build function called render, which takes ar
     <p>🌡</p>
     <div class="weathermsg">It's going to be ${data.temp}</div>
     <p>_display mood emojis here_</p>
-    <button id="btn">What's it's like outside?</button>
+    <button id="button">What's it's like outside?</button>
   `
 }
 
@@ -65,20 +66,13 @@ function getWeather(lat, lng) {
   })
 }
 
-/* WEATHER OPTIONS */
-//"clear sky"☀️☀️☀️
-// "mist"🌫☁️🌫
-// "broken clouds"☁️🌤☁️
-// 🌧🌧🌧
-// 🌩🌩🌩
-// 🌨🌨🌨
 
 /* CONTROLLER */
-delegate('body', 'click', '#btn', event => {
+delegate('body', 'click', '#button', event => {
   state.temp = '...'
   render(container, state)
 
-    getLatLng('sydney') // how to take value of input field ??
+    getLatLng(input.value) // how to take value of input field ??
     .then(latLng => getWeather(latLng.lat, latLng.lng))
     .then(temp => {
       state.temp = temp
@@ -101,23 +95,19 @@ delegate('body', 'click', '#btn', event => {
   })
 })
 
-/* Take search field */
-// function searchCity() {
-//   const input = document.querySelector("searchbar").value
-//
-// }
-
-
 /* Emoji string based on temperature */
-// function weatherEmojis() {
-//   if (mood === "cloudy") {
-//     console.log('worked')
-// }
+function weatherEmojis() {
+  const str = document.querySelector('#weathermsg')
 
-render(container, state)                     // render to the DOM
+  if (str.indexOf('clear sky')) {
+    console.log('Replace line 54 with ☀️☀️☀️ emojis')
+  } else if (str.indexOf('mist')) {
+    console.log('Replace line 54 with 🌫☁️🌫 emojis')
+  } else if (str.indexOf('broken clouds')) {
+    console.log('Replace line 54 with ☁️🌤☁️ emojis')
+  }
 
+weatherEmojis()
+}
 
-
-// declare the Lat and Lng each as variables
-// pass the Lat and Lng variables into the ${} inside the API search
-//
+render(container, state)
