@@ -1,10 +1,5 @@
 /*
   WEATHER APP:
-  1. Log out the current temperature for Sydney's latitude and longitude
-    (hint: complete the getWeather function, returning a promise with the result from the API call, use that promise to then log the result)
-  2. Convert the temperature from kelvin to degrees celsius
-  3. Add a form on index.html that allows a user to search for any city's weather and logs out the result.
-    (hint: google maps api from previous example)
   4. Display the result of the users search on the DOM.
   5. Display the type of weather too (cloudy, sunny, etc -- check the response)
 
@@ -18,7 +13,6 @@
     *
 
 */
-
 
 /* UTILS */
 const mapsApi = 'https://maps.googleapis.com/maps/api/geocode/json?address='
@@ -34,7 +28,6 @@ function getLatLng(location) { // build function called getLatLng, pass 'locatio
     return body.results[0].geometry.location
   })
 }
-
 
 /* MODEL */
 const state = { // declare variable called 'state' which leaves undefined lat and long
