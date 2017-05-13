@@ -6,9 +6,31 @@ body {
 
 input[type="searchbar"]
 {
-    opacity: 0.5;
-    width: 300px;
+    opacity: 0.45;
+    width: 400px;
     height: 30px;
-    color: red;
+    color: #B41E47;
+    font-size: 15px;
+    font-style: italic;
+    text-align: center;
+}
 
+input[type="searchbar"]::-webkit-input-placeholder
+{
+    color: #B41E47;
+    -webkit-transition: opacity 0.3s linear;
+}
+
+input[type="searchbar"]:focus::-webkit-input-placeholder
+{
+  opacity: 0;
+}
+
+button[id="button"]
+{
+  padding: 5px 40px;
+  font-size: 15px;
+  background-color: #D3EAF1;
+  opacity: 0.5;
+  color: #B41E47;
 }

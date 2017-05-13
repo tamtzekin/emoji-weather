@@ -30,22 +30,23 @@ function getLatLng(location) { // build function called getLatLng, pass 'locatio
 }
 
 /* MODEL */
-const state = { // declare variable called 'state' which leaves undefined lat and long
-  lat: '', // a property of the object 'state'
-  lng: '', // another property of the object 'state'
-  temp: ''
+const state = {
+  lat: '',
+  lng: '',
+  temp: '',
+  description: '',
 }
 
 /* VIEW */
 const container = document.querySelector('#container') // declare variable called container, select the container id
 
-function render(element, data) { // build function called render, which takes arguments element and data. it adds html to the element, concats the data
+function render(element, data) {
   element.innerHTML = `
     <center>
+    <button id="button">What's the weather like today?</button>
     <p>🌡</p>
-    <div class="weathermsg">It's going to be ${data.temp}</div>
-    <p>_display mood emojis here_</p>
-    <button id="button">What's it's like outside?</button>
+    <div class="weathermsg">It's going to be ${data.temp} with ${data.description}.</div>
+    <p>${weatherEmojis(data.description)}</p>
   `
 }
 
@@ -55,52 +56,46 @@ function getWeather(lat, lng) {
   return fetch(url)
   .then(res => res.json())
   .then(body => {
-    return Math.floor((body.main.temp) - 273.15) + "° today with " + (body.weather[0].description) + "."
+    return {
+      temp: Math.floor((body.main.temp) - 273.15),
+      description: body.weather[0].description
+    }
   })
 }
-
 
 /* CONTROLLER */
 delegate('body', 'click', '#button', event => {
   state.temp = '...'
+  state.description = '???'
+
   render(container, state)
 
-    getLatLng(input.value) // how to take value of input field ??
+    getLatLng(input.value)
     .then(latLng => getWeather(latLng.lat, latLng.lng))
-    .then(temp => {
-      state.temp = temp
+    .then(weather => {
+      state.temp = weather.temp // bug ?
+      state.description = weather.description // bug ??
 
       render(container, state)
   })
-
-//mood state for emojis
-  // .then(mood => {
-  //   state.mood = mood
-  //
-  //   render(container, state)
-  // })
 
   .catch(err => {
     state.lat = 'Something went wrong'
     state.lng = 'Something went wrong'
 
-    render(container, state)                  // render the DOM
+    render(container, state)
   })
 })
 
 /* Emoji string based on temperature */
-function weatherEmojis() {
-  const str = document.querySelector('#weathermsg')
-
+function weatherEmojis(str) {
   if (str.indexOf('clear sky')) {
-    console.log('Replace line 54 with ☀️☀️☀️ emojis')
+    return '☀️☀️☀️'
   } else if (str.indexOf('mist')) {
-    console.log('Replace line 54 with 🌫☁️🌫 emojis')
+    return '🌫☁️🌫'
   } else if (str.indexOf('broken clouds')) {
-    console.log('Replace line 54 with ☁️🌤☁️ emojis')
+    return '☁️🌤☁️'
   }
-
-weatherEmojis()
 }
 
 render(container, state)
