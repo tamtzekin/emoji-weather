@@ -11,7 +11,6 @@
     * Request a new temperature every few minutes (hint: setInterval)
     * Animate when the weather changes.
     *
-
 */
 
 /* UTILS */
@@ -45,12 +44,17 @@ function render(element, data) {
     <center>
     <button id="button">GO!</button>
     <p>🌡</p>
-    <div class="weathermsg">It's going to be about ${data.temp}° with ${data.description}.</div>
+
+    <div id="weathermsg">
+    It's going to be about ${data.temp}° with ${data.description}.
     <p>${weatherEmojis(data.description)}</p>
+    </div>
   `
 }
 
-// getWeather performed on lat and lng arguments, returns the temperature value in Kelvin
+// add class="hidden" above
+
+// Gets the weather based on latitude / longitude parameters
 function getWeather(lat, lng) {
   const url = `${weatherUrl}?lat=${lat}&lon=${lng}&APPID=${apiKey}`
   return fetch(url)
@@ -68,26 +72,28 @@ delegate('body', 'click', '#button', event => {
   state.temp = '~~~'
   state.description = '~~~'
 
+  revealText()
+
   render(container, state)
 
     getLatLng(input.value)
     .then(latLng => getWeather(latLng.lat, latLng.lng))
     .then(weather => {
-      state.temp = weather.temp // bug ?
-      state.description = weather.description // bug ??
+      state.temp = weather.temp
+      state.description = weather.description
 
       render(container, state)
   })
 
   .catch(err => {
-    state.lat = 'Something went wrong'
-    state.lng = 'Something went wrong'
+    state.lat = 'Something went wrong' // fix
+    state.lng = 'Something went wrong'// fix
 
     render(container, state)
   })
 })
 
-/* Emoji string based on temperature */
+/* Displays string of emoijis based on weather descriptions (eg. clear sky, overcast clouds etc.) */
 function weatherEmojis(str) {
   if (str.indexOf('clear sky') !== -1) {
   return '☀️☀️☀️'
@@ -115,6 +121,16 @@ function weatherEmojis(str) {
     return '💨💨💨'
   } else if (str.indexOf('haze') !== -1) {
     return '🌫️🌫️🌫️🌫️'
+  }
+}
+
+// Function to unhide div
+function revealText() {
+  const item = document.querySelector("#weathermsg")
+
+  if (item) {
+    item.className =
+    (item.className == "hidden") ? "unhidden" : "hidden";
   }
 }
 

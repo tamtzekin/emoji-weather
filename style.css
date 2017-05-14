@@ -39,3 +39,13 @@ button[id="button"]
   left: -372px;
   top: -64px;
 }
+
+#weathermsg.hidden
+{
+  display: none;
+}
+
+#weathermsg.unhidden
+{
+  display: block;
+}
